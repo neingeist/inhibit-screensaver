@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+from __future__ import print_function
+import dbus
+import time
+
+bus = dbus.SessionBus()
+
+# worked on Ubuntu 13.04 AFAICR:
+#proxy = bus.get_object('org.gnome.SessionManager','/org/gnome/SessionManager')
+#proxy.Inhibit("something",dbus.UInt32(0),"inhibiting",dbus.UInt32(8))
+
+# newer?
+# http://people.freedesktop.org/~hadess/idle-inhibition-spec/re01.html
+#proxy = bus.get_object('org.freedesktop.ScreenSaver', '/ScreenSaver')
+#proxy = bus.get_object('org.gnome.ScreenSaver', '/org/gnome/ScreenSaver')
+#cookie = proxy.Inhibit("inhibit-screensaver", "inhibit-screensaver")
+#proxy.Uninhibit(cookie)
+
+# newer? XFCE seems to implement it
+# org.freedesktop.PowerManagement /org/freedesktop/PowerManagement/Inhibit # Introspect
+
+print("Inhibiting...")
+
+# This method currently works on Ubuntu 13.10
+screensaver = bus.get_object('org.gnome.ScreenSaver', '/')
+
+while True:
+    screensaver.SimulateUserActivity()
+    time.sleep(10)
