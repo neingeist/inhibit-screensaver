@@ -21,6 +21,7 @@ elif 'org.freedesktop.PowerManagement' in bus.list_names():
                            '/org/freedesktop/PowerManagement/Inhibit')
     while True:
         cookie = proxy.Inhibit('inhibit-screensaver', 'inhibit-screensaver')
+        time.sleep(10)
     proxy.Uninhibit(cookie)
 
 
